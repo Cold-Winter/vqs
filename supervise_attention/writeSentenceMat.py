@@ -14,7 +14,7 @@ tokenzer = TweetTokenizer()
 model = word2vec.Word2Vec.load_word2vec_format('model.bin', binary=True)
 
 
-feaFile = open('regionValOuestionList.txt')
+feaFile = open('regionValQuestionList.txt')
 count = 0
 qMat = np.zeros((20, 300), dtype='float')
 print qMat.shape
