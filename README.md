@@ -5,7 +5,7 @@ Source code for VQS: Linking Segmentations to Questions and Answers for Supervis
 ## Requirements
 
 * This code requires [caffe](http://caffe.berkeleyvision.org/). The preprocssing code is in Python, and you need to install [NLTK](http://www.nltk.org/) if you want to use NLTK to tokenize the question.
-* You need to install [gensim](https://radimrehurek.com/gensim/install.html) and download the pretrained [word2vec](https://code.google.com/archive/p/word2vec). (This is `model.bin` in `processJson.py` and `writeSentenceMat.py`)
+* You need to install [gensim](https://radimrehurek.com/gensim/install.html) and download the pretrained [word2vec](https://code.google.com/archive/p/word2vec) (This is `model.bin` in `processJson.py` and `writeSentenceMat.py`).
 
 ## Download Dataset
 
@@ -23,14 +23,14 @@ Then
 python processJson.py
 python normVec.py
 ```
-to get concat l2 normalized quesion and answer feature
+to get concatenate l2 normalized quesion and answer feature
 
 And then
 
 ```
 python writelmdb.py
 ```
-to concat the l2 normalized image feature, question feature and answer feature into LMDB to feed into neural network.
+to concatenate the l2 normalized image feature, question feature and answer feature into LMDB to feed into neural network (MLP).
 
 ### MLP
 
