@@ -2,9 +2,9 @@ import json
 from nltk.tokenize import TweetTokenizer
 from gensim.models import word2vec
 tokenzer = TweetTokenizer()
-s0 = "This is a cooool #dummysmiley: :-) :-P <3 and some arrows < > -> <--"
+
 model = word2vec.Word2Vec.load_word2vec_format('model.bin', binary=True)
-print tokenzer.tokenize(s0)
+
 with open('mscoco_train2014_annotations.json', 'r') as f:
     dataAnno = json.load(f)
 with open('MultipleChoice_mscoco_train2014_questions.json', 'r') as f:
@@ -72,6 +72,7 @@ for questionEn in dataQuestion['questions']:
                 feaFile.write('\t')
                 for value in cFea:
                     feaFile.write(str(value)+' ')
+                # is this answer right or wrong //lable
                 feaFile.write('\t0\t')
                 feaFile.write(str(questionEn['image_id'])+ '\t' + questionEn['question'] + '\t' + str(questionEn['question_id']) + '\n')
             else:
@@ -99,6 +100,7 @@ for questionEn in dataQuestion['questions']:
         feaFile.write('\t')
         for value in aFea:
             feaFile.write(str(value) + ' ')
+        # is this answer right or wrong //lable
         feaFile.write('\t1\t')
         feaFile.write(str(questionEn['image_id'])+ '\t' + questionEn['question'] + '\t' + str(questionEn['question_id']) + '\n')
     else:

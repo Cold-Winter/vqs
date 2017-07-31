@@ -10,9 +10,9 @@ from nltk.tokenize import TweetTokenizer
 from gensim.models import word2vec
 import shutil
 tokenzer = TweetTokenizer()
-s0 = "This is a cooool #dummysmiley: :-) :-P <3 and some arrows < > -> <--"
-model = word2vec.Word2Vec.load_word2vec_format('../../getQaVec/model.bin', binary=True)
-print tokenzer.tokenize(s0)
+
+model = word2vec.Word2Vec.load_word2vec_format('model.bin', binary=True)
+
 
 feaFile = open('regionValOuestionList.txt')
 count = 0

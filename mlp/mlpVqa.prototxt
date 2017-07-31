@@ -27,103 +27,12 @@ layer {
     backend: LMDB
   }
 }
-layer {
-  name: "mlpVqa_Tag"
-  type: "Data"
-  top: "data_Tag"
-  include {
-    phase: TRAIN
-  }
-  data_param {
-    source: "vqa256TagTrainNormAttentAllLmdbMix"
-    batch_size: 8192
-    backend: LMDB
-  }
-}
-layer {
-  name: "mlpVqa_Tag"
-  type: "Data"
-  top: "data_Tag"
-  include {
-    phase: TEST
-  }
-  data_param {
-    source: "vqa256TagValNormAttentAllLmdbMix"
-    batch_size: 2048
-    backend: LMDB
-  }
-}
-#layer {
-#  name: "mlpVqa_Resnext"
-#  type: "Data"
-#  top: "mlpVqa_Resnext"
-#  include {
-#    phase: TRAIN
-#  }
-#  data_param {
-#    source: "vqaTrainResnextLmdbMix"
-#    batch_size: 8192
-#    backend: LMDB
-#  }
-#}
-#layer {
-#  name: "mlpVqa_Resnext"
-#  type: "Data"
-#  top: "mlpVqa_Resnext"
-#  include {
-#    phase: TEST
-#  }
-#  data_param {
-#    source: "vqaValResnextLmdbMix"
-#    batch_size: 2048
-#    backend: LMDB
-#  }
-#}
-#layer {
-#  name: "slicevqaatt"
-#  type: "Slice"
-#  bottom: "data"
-#  ## Example of label with a shape N x 3 x 1 x 1
-#  top: "slice_q"
-#  top: "slice_i"
-#  top: "slice_att"
-#  top: "slice_a"
-#  slice_param {
-#    axis: 1
-#    slice_point: 300
-#    slice_point: 2348
-#    slice_point: 4396
-#  }
-#}
-layer {
-  name: "ConcatData"
-  #bottom: "slice_q"
-  #bottom: "slice_i"
-  #bottom: "slice_att"
-  #bottom: "slice_a"
-  bottom: "data"
-  bottom: "data_Tag"
-  top: "concatData"
-  type: "Concat"
-  concat_param {
-    axis: 1
-  }
-}
-#layer {
-#  name: "reductionloss"
-#  bottom: "slice_i"
-#  top: "reductionloss"
-#  type: "Reduction"
-#  loss_weight: 0
-#  reduction_param {
-#    axis: 0
-#  }
-#}
-#
+
+
 layer {
   name: "ip1"
   type: "InnerProduct"
-  bottom: "concatData"
+  bottom: "data"
   top: "ip1"
   param {
     lr_mult: 1

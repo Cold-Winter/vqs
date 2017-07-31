@@ -5,17 +5,17 @@ import cv2
 import caffe
 from caffe.proto import caffe_pb2 
 import math
-inputfile = open('testFeaNorm.txt')
+inputfile = open('trainFeaNorm.txt')
 imagelist = []
-
-for line in open('testList.txt'):
+#### here we extract the image feature and put it into feaTrainPool5.txt 
+for line in open('trainList.txt'):
     lines = line.split()[0].split('/')
     imagename = lines[-1][:-4]
     imageid=int(imagename.split('_')[-1])
     imagelist.append(imageid)
 imageCount = 0
 imagefeamap = {}
-for line in open('feaTestPool5.txt'):
+for line in open('feaTrainPool5.txt'):
     if imageCount == len(imagelist):
         break
     lines = line.split()
@@ -25,9 +25,10 @@ for line in open('feaTestPool5.txt'):
 print len(imagelist)
 print len(imagefeamap)
 regionshotcount = 0
+#######
 
 imagefeaarray = np.asarray(imagefeamap.values(),dtype=np.float32)
-lmdb_file = 'vqaTestNormLmdb'
+lmdb_file = 'vqaTrainNormLmdb'
 map_size = imagefeaarray.nbytes * 2000
 print map_size
 

@@ -14,6 +14,7 @@ for line in linelist:
     afea = lines[1].split()
     feaSum = 0
     outtemp = ''
+    # l2 norm to quesion feature and answer feature
     for fea in qfea:
         feaSum += float(fea) * float(fea)
     feaSum = math.sqrt(feaSum)
