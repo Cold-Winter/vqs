@@ -1,0 +1,20 @@
+# The train/test net protocol buffer definition
+net: "mlpVqaAttTag.prototxt"
+test_iter: 50
+test_interval: 1000
+base_lr: 0.6
+momentum: 0.9
+weight_decay: 0.000000001
+lr_policy: "multistep"
+gamma: 0.2
+stepvalue: 35000
+stepvalue: 55000
+stepvalue: 65000
+stepvalue: 75000
+stepvalue: 80000
+display: 100
+max_iter: 90000
+snapshot: 1000
+snapshot_prefix: "modelclean/atttag2"
+solver_mode: GPU
+device_id : 2

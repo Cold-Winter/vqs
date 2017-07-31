@@ -1,0 +1,16 @@
+# The train/test net protocol buffer definition
+net: "mlpVqaConvStack224.prototxt"
+test_iter: 220
+test_interval: 1000
+base_lr: 0.0003
+momentum: 0.9
+weight_decay: 0.0000001
+lr_policy: "step"
+gamma: 0.2
+stepsize: 5000
+display: 100
+max_iter: 50000
+snapshot: 1000
+snapshot_prefix: "model/conv224"
+solver_mode: GPU
+device_id : 1

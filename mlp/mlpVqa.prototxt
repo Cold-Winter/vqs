@@ -1,0 +1,197 @@
+name: "mlpVqa"
+layer {
+  name: "mlpVqa"
+  type: "Data"
+  top: "data"
+  top: "label"
+  include {
+    phase: TRAIN
+  }
+  data_param {
+    source: "vqaTrainAttentAllLmdbMix"
+    batch_size: 8192
+    backend: LMDB
+  }
+}
+layer {
+  name: "mlpVqa"
+  type: "Data"
+  top: "data"
+  top: "label"
+  include {
+    phase: TEST
+  }
+  data_param {
+    source: "vqaValAttentAllLmdbMix"
+    batch_size: 2048
+    backend: LMDB
+  }
+}
+layer {
+  name: "mlpVqa_Tag"
+  type: "Data"
+  top: "data_Tag"
+  include {
+    phase: TRAIN
+  }
+  data_param {
+    source: "vqa256TagTrainNormAttentAllLmdbMix"
+    batch_size: 8192
+    backend: LMDB
+  }
+}
+layer {
+  name: "mlpVqa_Tag"
+  type: "Data"
+  top: "data_Tag"
+  include {
+    phase: TEST
+  }
+  data_param {
+    source: "vqa256TagValNormAttentAllLmdbMix"
+    batch_size: 2048
+    backend: LMDB
+  }
+}
+#layer {
+#  name: "mlpVqa_Resnext"
+#  type: "Data"
+#  top: "mlpVqa_Resnext"
+#  include {
+#    phase: TRAIN
+#  }
+#  data_param {
+#    source: "vqaTrainResnextLmdbMix"
+#    batch_size: 8192
+#    backend: LMDB
+#  }
+#}
+#layer {
+#  name: "mlpVqa_Resnext"
+#  type: "Data"
+#  top: "mlpVqa_Resnext"
+#  include {
+#    phase: TEST
+#  }
+#  data_param {
+#    source: "vqaValResnextLmdbMix"
+#    batch_size: 2048
+#    backend: LMDB
+#  }
+#}
+#layer {
+#  name: "slicevqaatt"
+#  type: "Slice"
+#  bottom: "data"
+#  ## Example of label with a shape N x 3 x 1 x 1
+#  top: "slice_q"
+#  top: "slice_i"
+#  top: "slice_att"
+#  top: "slice_a"
+#  slice_param {
+#    axis: 1
+#    slice_point: 300
+#    slice_point: 2348
+#    slice_point: 4396
+#  }
+#}
+layer {
+  name: "ConcatData"
+  #bottom: "slice_q"
+  #bottom: "slice_i"
+  #bottom: "slice_att"
+  #bottom: "slice_a"
+  bottom: "data"
+  bottom: "data_Tag"
+  top: "concatData"
+  type: "Concat"
+  concat_param {
+    axis: 1
+  }
+}
+#layer {
+#  name: "reductionloss"
+#  bottom: "slice_i"
+#  top: "reductionloss"
+#  type: "Reduction"
+#  loss_weight: 0
+#  reduction_param {
+#    axis: 0
+#  }
+#}
+#
+layer {
+  name: "ip1"
+  type: "InnerProduct"
+  bottom: "concatData"
+  top: "ip1"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 1
+  }
+  inner_product_param {
+    num_output: 8192
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      #value : 0
+    }
+  }
+}
+layer {
+  name: "relu1"
+  type: "ReLU"
+  bottom: "ip1"
+  top: "ip1"
+}
+layer {
+  name: "drop1"
+  type: "Dropout"
+  bottom: "ip1"
+  top: "ip1"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "ip2"
+  type: "InnerProduct"
+  bottom: "ip1"
+  top: "ip2"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 1
+  }
+  inner_product_param {
+    num_output: 2
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layer {
+  name: "accuracy"
+  type: "Accuracy"
+  bottom: "ip2"
+  bottom: "label"
+  top: "accuracy"
+  include {
+    phase: TEST
+  }
+}
+layer {
+  name: "loss"
+  type: "SoftmaxWithLoss"
+  bottom: "ip2"
+  bottom: "label"
+  top: "loss"
+}
