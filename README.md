@@ -1,6 +1,6 @@
 # VQS
 
-Source code for VQS: Linking Segmentations to Questions and Answers for Supervised Attention in VQA and Question-Focused Semantic Segmentation. This current code can get 69.8 on Multiple-Choice on test-standard split of VQA v1. 
+Source code for VQS: Linking Segmentations to Questions and Answers for Supervised Attention in VQA and Question-Focused Semantic Segmentation. This current code can get 69.8 on Multiple-Choice task on test-standard split of [VQA v1](http://www.visualqa.org/vqa_v1_challenge.html). 
 
 ## Requirements
 
