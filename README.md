@@ -55,3 +55,5 @@ And you can get `attention feature` with this model.
 
 Now you can concat `attention feature` into MLP model
 
+These processes are a little complicated, please feel free to ask me if you have some questions.
+
